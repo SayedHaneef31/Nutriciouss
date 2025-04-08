@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary Branding Colors -->
+    <color name="primary_green">#5DB075</color>
+    <color name="secondary_mint">#E9F5EC</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_yellow">#FFE27A</color>
+    <color name="accent_coral">#FF9F9F</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#2E5E4E</color>
+    <color name="text_secondary">#4A4A4A</color>
+
+    <!-- Backgrounds -->
+    <color name="background_light">#FAFAFA</color>
+    <color name="card_background">#F1F8F5</color>
+
+
+
+</resources>
