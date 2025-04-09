@@ -60,7 +60,7 @@ dependencies {
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    //Material Card View
+    //Material UI
     implementation("com.google.android.material:material:1.11.0")
 
     // GSON
