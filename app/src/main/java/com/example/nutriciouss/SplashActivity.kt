@@ -17,9 +17,9 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler (Looper . getMainLooper () ) . postDelayed ({
-            startActivity(Intent (  this, MainActivity::class.java))
+            startActivity(Intent (  this, HomeActivity::class.java))
             finish()
-        } ,3000)
+        } ,1200)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
