@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.gridlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,6 +63,8 @@ dependencies {
 
     //Material UI
     implementation("com.google.android.material:material:1.11.0")
+
+
 
     // GSON
     implementation("com.google.code.gson:gson:2.10.1")

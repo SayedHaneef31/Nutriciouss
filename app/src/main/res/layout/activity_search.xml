@@ -111,12 +111,13 @@
             android:textSize="25dp" />
     </RadioGroup>
 
+
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
         android:text="Browse Categories"
         android:textColor="@color/black"
         android:textSize="30dp"
@@ -124,12 +125,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <include layout="@layout/salad_card" />
+
+            <include layout="@layout/drinks_card" />
+
+            <include layout="@layout/fruits_card" />
+
+            <include layout="@layout/greens_card" />
+
+            <include layout="@layout/grains_card" />
+
+            <include layout="@layout/snacks_card" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:outlineAmbientShadowColor="@color/black"
+
         app:itemRippleColor="@color/black"
         android:layout_marginTop="10dp"
         app:menu="@menu/bottom_nav_bar"
@@ -139,4 +170,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/white" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
