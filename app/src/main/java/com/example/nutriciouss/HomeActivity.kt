@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.nutriciouss.Data.Recipie
 import com.example.nutriciouss.Retrofit.RetrofitInstance
 import com.example.nutriciouss.databinding.ActivityHomeBinding
 import com.example.nutriciouss.databinding.CalorieCardBinding
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    private var randomRecipie: Recipie? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,24 +95,43 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
+
         //Enabling random recipie button  btnRandomMeal healthScoreIDDDDD  randomMealTitleIDDDD
         binding.btnRandomMeal.setOnClickListener {
             generateRandomRecipie()
+        }
+
+        //Enabling click listener for get detailed recipie
+        binding.randomMealTitleIDDDD.setOnClickListener {
+            val intent = Intent(this, RecipieDetailActivity::class.java)
+            intent.putExtra("image_url", randomRecipie?.image)
+            intent.putExtra("title", randomRecipie?.title)
+            intent.putExtra("readyInMinutes", randomRecipie?.readyInMinutes)
+            intent.putExtra("healthScore", randomRecipie?.healthScore)
+            intent.putExtra("summary", randomRecipie?.summary)
+            startActivity(intent)
+        }
+        binding.healthScoreIDDDDD.setOnClickListener {
+            val intent = Intent(this, RecipieDetailActivity::class.java)
+            intent.putExtra("image_url", randomRecipie?.image)
+            intent.putExtra("title", randomRecipie?.title)
+            intent.putExtra("readyInMinutes", randomRecipie?.readyInMinutes)
+            intent.putExtra("healthScore", randomRecipie?.healthScore)
+            intent.putExtra("summary", randomRecipie?.summary)
+            startActivity(intent)
         }
 
     }
 
     private fun generateRandomRecipie() {
         lifecycleScope.launch {
-            Log.e("CHECK-CHECK", "I am in the btnRandomMeal lifecycle launch of home screen")
-            println("I am in the btnRandomMeal lifecycle launch of home screen")
             try {
                 val response = RetrofitInstance.api.getRandomRecipie("0a1d7e19d1f047028d945a2c42bf4a6a")
                 if(response.recipes.isNotEmpty())
                 {
-                    val randomRecipie = response.recipes[0]
-                    binding.randomMealTitleIDDDD.text = "🥣 ${randomRecipie.title}"
-                    binding.healthScoreIDDDDD.text = "Ready in : ${randomRecipie.readyInMinutes} | Health Score : ${randomRecipie.healthScore}"
+                     randomRecipie = response.recipes[0]
+                    binding.randomMealTitleIDDDD.text = "🥣 ${randomRecipie?.title}"
+                    binding.healthScoreIDDDDD.text = "Ready in : ${randomRecipie?.readyInMinutes} | Health Score : ${randomRecipie?.healthScore}"
 
                 }
                 else {
