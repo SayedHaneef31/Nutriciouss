@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SelectedToggleStyle">
-        <item name="android:background">#1C3D2F</item> <!-- Dark green -->
-        <item name="android:textColor">#FFFFFF</item> <!-- White -->
-        <item name="android:padding">10dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_margin">0dp</item>
-        <item name="android:layout_marginEnd">0dp</item>
-        <item name="android:layout_marginStart">0dp</item>
-    </style>
-
-    <style name="UnselectedToggleStyle">
-        <item name="android:background">@android:color/white</item>
-        <item name="android:textColor">#1C3D2F</item> <!-- Dark green -->
-        <item name="android:padding">10dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_margin">0dp</item>
-    </style>
+<!--    <style name="SelectedToggleStyle">-->
+<!--        <item name="android:background">#1C3D2F</item> &lt;!&ndash; Dark green &ndash;&gt;-->
+<!--        <item name="android:textColor">#FFFFFF</item> &lt;!&ndash; White &ndash;&gt;-->
+<!--        <item name="android:padding">10dp</item>-->
+<!--        <item name="android:textStyle">bold</item>-->
+<!--        <item name="android:gravity">center</item>-->
+<!--        <item name="android:layout_margin">0dp</item>-->
+<!--        <item name="android:layout_marginEnd">0dp</item>-->
+<!--        <item name="android:layout_marginStart">0dp</item>-->
+<!--    </style>-->
+<!--    NOT USING THIS IN THE CODE NOW  -->
+<!--    <style name="UnselectedToggleStyle">-->
+<!--        <item name="android:background">@android:color/white</item>-->
+<!--        <item name="android:textColor">#1C3D2F</item> &lt;!&ndash; Dark green &ndash;&gt;-->
+<!--        <item name="android:padding">10dp</item>-->
+<!--        <item name="android:textStyle">bold</item>-->
+<!--        <item name="android:gravity">center</item>-->
+<!--        <item name="android:layout_margin">0dp</item>-->
+<!--    </style>-->
 </resources>

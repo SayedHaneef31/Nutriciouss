@@ -51,6 +51,7 @@ class HomeActivity : AppCompatActivity() {
         waterCal.text = "8 out of 8 glasses!!"
 
         // Enabling bottom navigation bar functionality
+        binding.bottomNavigation.selectedItemId = R.id.nav_home  //this will highlight that we in this activity
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {

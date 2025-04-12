@@ -27,6 +27,7 @@ class LogActivity : AppCompatActivity() {
         }
 
         // Enabling bottom navigation bar functionality
+        binding.bottomNavigation.selectedItemId = R.id.nav_logs  //this will highlight that we in this activity
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -35,6 +36,8 @@ class LogActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_search -> {
+                    startActivity(Intent(this, SearchActivity::class.java))
+                    finish()
                     // Handle profile icon click
                     true
                 }
@@ -45,8 +48,7 @@ class LogActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_logs -> {
-                    startActivity(Intent(this, LogActivity::class.java))
-                    finish()
+
                     // Handle profile icon click
                     true
                 }

@@ -26,6 +26,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         // Enabling bottom navigation bar functionality
+        binding.bottomNavigation.selectedItemId = R.id.nav_profile  //this will highlight that we in this activity
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {

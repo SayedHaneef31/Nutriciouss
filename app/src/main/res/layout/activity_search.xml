@@ -12,8 +12,8 @@
         android:id="@+id/imageView2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/only_icon_svg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,8 +22,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins"
         android:text="Search"
         android:textColor="@color/black"
@@ -88,11 +88,11 @@
 
         <RadioButton
             android:id="@+id/foodRadio"
-            style="@style/SelectedToggleStyle"
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-
+            android:textColor="@color/black"
             android:button="@null"
             android:gravity="center"
             android:text="Food"
@@ -100,17 +100,18 @@
 
         <RadioButton
             android:id="@+id/nutrientRadio"
-            style="@style/UnselectedToggleStyle"
+            android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-
             android:button="@null"
             android:gravity="center"
             android:text="Nutrients"
             android:textSize="25dp" />
     </RadioGroup>
 
+<!--    android:checked="true"-->
+<!--    by default it will be marked checked-->
 
     <TextView
         android:id="@+id/textView7"
