@@ -2,16 +2,20 @@ package com.example.nutriciouss
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.nutriciouss.Retrofit.RetrofitInstance
 import com.example.nutriciouss.databinding.ActivityHomeBinding
 import com.example.nutriciouss.databinding.CalorieCardBinding
 import com.example.nutriciouss.databinding.NutrientCardBinding
 import com.example.nutriciouss.databinding.WaterCardBinding
+import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
 
@@ -25,6 +29,9 @@ class HomeActivity : AppCompatActivity() {
         //Setting up the view binding
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //to update the random recipie on screen loading
+        generateRandomRecipie()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -84,5 +91,36 @@ class HomeActivity : AppCompatActivity() {
             }
 
         }
+
+
+        //Enabling random recipie button  btnRandomMeal healthScoreIDDDDD  randomMealTitleIDDDD
+        binding.btnRandomMeal.setOnClickListener {
+            generateRandomRecipie()
+        }
+
     }
+
+    private fun generateRandomRecipie() {
+        lifecycleScope.launch {
+            Log.e("CHECK-CHECK", "I am in the btnRandomMeal lifecycle launch of home screen")
+            println("I am in the btnRandomMeal lifecycle launch of home screen")
+            try {
+                val response = RetrofitInstance.api.getRandomRecipie("0a1d7e19d1f047028d945a2c42bf4a6a")
+                if(response.recipes.isNotEmpty())
+                {
+                    val randomRecipie = response.recipes[0]
+                    binding.randomMealTitleIDDDD.text = "🥣 ${randomRecipie.title}"
+                    binding.healthScoreIDDDDD.text = "Ready in : ${randomRecipie.readyInMinutes} | Health Score : ${randomRecipie.healthScore}"
+
+                }
+                else {
+                    Log.e("API_ERROR", "No recipes found in the response")
+                }
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
 }
