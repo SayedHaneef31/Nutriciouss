@@ -6,16 +6,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.nutriciouss.databinding.ActivitySearchBinding
+import com.example.nutriciouss.databinding.ActivityHomeBinding
+import com.example.nutriciouss.databinding.ActivityProfileBinding
 
-class SearchActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySearchBinding
+    private lateinit var binding: ActivityProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = ActivitySearchBinding.inflate(layoutInflater)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -24,6 +25,7 @@ class SearchActivity : AppCompatActivity() {
             insets
         }
 
+        // Enabling bottom navigation bar functionality
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -33,15 +35,14 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_search -> {
+                    startActivity(Intent(this, SearchActivity::class.java))
+                    finish()
                     // Handle profile icon click
                     true
                 }
 
                 R.id.nav_profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
-                    finish()
                     // Handle profile icon click
-
                     true
                 }
 
@@ -50,7 +51,6 @@ class SearchActivity : AppCompatActivity() {
                     finish()
                     // Handle profile icon click
                     true
-
                 }
 
                 else -> false

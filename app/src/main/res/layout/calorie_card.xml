@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
             <TextView
+                android:id="@+id/calorieLeftidddd"
                 android:text="1,200 kcal left"
                 android:textColor="#000000"
                 android:textSize="18sp"
