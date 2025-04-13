@@ -32,8 +32,11 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //to update the random recipie on screen loading
-        generateRandomRecipie()
+//        ****************************************************************************
+//        REMOVE THE BELOW COMMENTS AFTER TESTING
+//        ****************************************************************************
+//        //to update the random recipie on screen loading
+//        generateRandomRecipie()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -94,12 +97,14 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
-
-
-        //Enabling random recipie button  btnRandomMeal healthScoreIDDDDD  randomMealTitleIDDDD
-        binding.btnRandomMeal.setOnClickListener {
-            generateRandomRecipie()
-        }
+//
+//        ****************************************************************************
+//        REMOVE THE BELOW COMMENTS AFTER TESTING
+//        ****************************************************************************
+//        //Enabling random recipie button  btnRandomMeal healthScoreIDDDDD  randomMealTitleIDDDD
+//        binding.btnRandomMeal.setOnClickListener {
+//            generateRandomRecipie()
+//        }
 
         //Enabling click listener for get detailed recipie
         binding.randomMealTitleIDDDD.setOnClickListener {

@@ -1,6 +1,7 @@
 package com.example.nutriciouss.Retrofit
 
 import com.example.nutriciouss.Data.RecipieResponse
+import com.example.nutriciouss.Data.RecipieSuggestion
 import okhttp3.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,5 +16,12 @@ interface SpoonacularApi
         @Query("include-tags") tags: String="whole30,indian,protein"
 
     ): RecipieResponse
+
+    @GET("recipes/autocomplete")
+    suspend fun autoCompleteSearch(
+        @Query("apiKey") apiKey: String,
+        @Query("query") query: String,
+        @Query("number") number: Int=6
+    ) : List<RecipieSuggestion>
 
 }

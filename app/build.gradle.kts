@@ -77,6 +77,9 @@ dependencies {
     //Glide to load images
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    //for auto complete
+    implementation("androidx.core:core-ktx:1.10.1")
+
 
 
 }

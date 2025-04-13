@@ -1,18 +1,29 @@
 package com.example.nutriciouss
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.lifecycleScope
+import com.example.nutriciouss.Retrofit.RetrofitInstance.api
 import com.example.nutriciouss.databinding.ActivitySearchBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
+    private lateinit var adapter: ArrayAdapter<String>
+    private val suggestions = mutableListOf<String>()
+    private var lastQuery: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,8 +38,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         // Enabling bottom navigation bar functionality
-        binding.bottomNavigation.selectedItemId =
-            R.id.nav_search  //this will highlight that we in this activity
+        binding.bottomNavigation.selectedItemId = R.id.nav_search  //this will highlight that we in this activity
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -38,68 +48,111 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_search -> {
-                    // Handle profile icon click
+                    // Already on search page
                     true
                 }
 
                 R.id.nav_profile -> {
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
-                    // Handle profile icon click
-
                     true
                 }
 
                 R.id.nav_logs -> {
                     startActivity(Intent(this, LogActivity::class.java))
                     finish()
-                    // Handle profile icon click
                     true
-
                 }
 
                 else -> false
             }
         }
 
-        //Enabling toggle button in the search screen
-        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.foodRadio -> {
+        //Search bar configuration
+        setupSearchBar()
+    }
 
+    private fun setupSearchBar() {
+        // Initialize the adapter with an empty list first
+        adapter = ArrayAdapter(this, R.layout.dropdown_item_layout, ArrayList<String>())
 
-                    //Selected button config
-                    binding.foodRadio.setBackgroundColor(ContextCompat.getColor(this, R.color.text_primary))
-                    //binding.foodRadio.setTextColor(getResources().getColor(R.color.white))     /getColor() is depriciated now instead use this
-                    binding.foodRadio.setTextColor(ContextCompat.getColor(this, R.color.white))
-                    binding.foodRadio.setTypeface(null, Typeface.BOLD)
+        // Configure the AutoCompleteTextView
+        binding.searchBarIDDDD.setAdapter(adapter)
+        binding.searchBarIDDDD.threshold = 1
 
-                    //unselected button config
-                    binding.nutrientRadio.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-                    binding.nutrientRadio.setTextColor(ContextCompat.getColor(this, R.color.black))
-                    binding.nutrientRadio.setTypeface(null, Typeface.NORMAL)
+        try {
+            // These properties may not be supported on all devices/implementations
+            binding.searchBarIDDDD.setDropDownBackgroundResource(android.R.color.white)
+        } catch (e: Exception) {
+            Log.e("SearchBar", "Error setting dropdown background: ${e.message}")
+        }
 
+        // Focus the search bar and show dropdown
+        binding.searchBarIDDDD.requestFocus()
+
+        // Set up text change listener with debounce
+        binding.searchBarIDDDD.doOnTextChanged { text, _, _, _ ->
+            Log.e("Checkkkkkkk", "Text changing in the search")
+            val query = text.toString().trim()
+
+            if (query.length >= 1 && query != lastQuery) {
+                lastQuery = query
+                Log.e("Checkkkkkkk", "Query length reached >2")
+
+                lifecycleScope.launch {
+                    delay(300) // debounce delay
+                    val queryResult = fetchSuggestions(query)
+                    Log.e("Checkkkkkkk", queryResult.toString())
+
+                    withContext(Dispatchers.Main) {
+                        updateSuggestions(queryResult)
+                    }
                 }
-
-                R.id.nutrientRadio -> {
-
-                    //Selected button config
-                    binding.nutrientRadio.setBackgroundColor(ContextCompat.getColor(this, R.color.text_primary))
-                    binding.nutrientRadio.setTextColor(ContextCompat.getColor(this, R.color.white))
-                    binding.nutrientRadio.setTypeface(null, Typeface.BOLD)
-
-                    //unselected button config
-                    binding.foodRadio.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-                    binding.foodRadio.setTextColor(ContextCompat.getColor(this, R.color.black))
-                    binding.foodRadio.setTypeface(null, Typeface.NORMAL)
-
-                }
-
+            } else if (query.isEmpty()) {
+                // Clear suggestions when query is empty
+                clearSuggestions()
             }
         }
-        // Manually trigger default selection style update
-        binding.radioGroup.check(R.id.foodRadio)  // programmatically selects the food radio button and triggers the setOnCheckedChangeListener block.
-        // AND YES ORDERING MATTERS
-        //IF I ADD THIS ABOVE THE LISTENER THAN  it WILL HAVE no idea it was supposed to change colors and fonts — no listener = no action.
+    }
+
+    private fun clearSuggestions() {
+        adapter.clear()
+        adapter.notifyDataSetChanged()
+    }
+
+    private suspend fun fetchSuggestions(query: String): List<String> {
+        Log.e("Checkkkkkkk", "Going to fetch suggestions")
+        return try {
+            val response = api.autoCompleteSearch("0a1d7e19d1f047028d945a2c42bf4a6a", query)
+            Log.e("Checkkkkkkk", "Response fetched")
+            response.map { it.title }
+        } catch (e: Exception) {
+            Log.e("Search", "Error fetching suggestions: ${e.message}")
+            emptyList()
+        }
+    }
+
+    private fun updateSuggestions(newSuggestions: List<String>) {
+        Log.e("Checkkkkkkk", "Updating suggestions: ${newSuggestions.size} items")
+
+        // Update the adapter with new suggestions
+        adapter.clear()
+        adapter.addAll(newSuggestions)
+        adapter.notifyDataSetChanged()
+
+        // Log suggestion details
+        newSuggestions.forEachIndexed { index, item ->
+            Log.d("Suggestion", "[$index] $item")
+        }
+
+        // Only show dropdown if we have suggestions and searchbar has focus
+        if (binding.searchBarIDDDD.hasFocus() && newSuggestions.isNotEmpty()) {
+            binding.searchBarIDDDD.post {
+                binding.searchBarIDDDD.showDropDown()
+            }
+            Log.e("Checkkkkkkk", "Showing dropdown with ${newSuggestions.size} suggestions")
+        } else {
+            Log.e("Checkkkkkkk", "Not showing dropdown - hasFocus: ${binding.searchBarIDDDD.hasFocus()}, suggestions: ${newSuggestions.size}")
+        }
     }
 }

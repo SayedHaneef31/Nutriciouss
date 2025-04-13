@@ -46,16 +46,17 @@
         app:layout_constraintTop_toTopOf="@+id/imageView2"
         app:layout_constraintVertical_bias="0.65" />
 
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="380dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="16dp"
+
+
+    <AutoCompleteTextView
+        android:id="@+id/searchBarIDDDD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/search_bar_background"
-        android:ems="10"
         android:hint="What's on your mind?"
-
+        android:completionThreshold="1"
         android:inputType="text"
         android:padding="12dp"
         android:textColorHint="#000000"
@@ -65,53 +66,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/searchIconIDDDD"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextText"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText"
-        app:layout_constraintTop_toTopOf="@+id/editTextText"
+        app:layout_constraintBottom_toBottomOf="@+id/searchBarIDDDD"
+        app:layout_constraintEnd_toEndOf="@+id/searchBarIDDDD"
+        app:layout_constraintTop_toTopOf="@+id/searchBarIDDDD"
         app:srcCompat="@drawable/magnifier" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="348dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/toggle_container_bg"
-        android:clipToOutline="true"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText">
 
-        <RadioButton
-            android:id="@+id/foodRadio"
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:button="@null"
-            android:gravity="center"
-            android:text="Food"
-            android:textSize="25dp" />
-
-        <RadioButton
-            android:id="@+id/nutrientRadio"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:text="Nutrients"
-            android:textSize="25dp" />
-    </RadioGroup>
-
-<!--    android:checked="true"-->
-<!--    by default it will be marked checked-->
 
     <TextView
         android:id="@+id/textView7"
@@ -124,7 +88,7 @@
         android:textSize="30dp"
         android:textStyle="italic|bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/searchIconIDDDD" />
 
     <HorizontalScrollView
         android:layout_width="0dp"
