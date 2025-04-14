@@ -9,26 +9,30 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="52dp"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:contentDescription="Recipe Image"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/full_icon_svg" />
+        app:srcCompat="@drawable/full_icon_svg"
+        android:transitionName="recipeImage"/>
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Butter Chicken"
         android:textStyle="bold"
-        android:textSize="34sp"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
@@ -50,29 +54,34 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@drawable/info_card_background"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:elevation="2dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center">
 
 
                 <TextView
                     android:id="@+id/readyinminuteeiddddddddd"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Ready in : "
+                    android:text="Ready in : 30 mins"
                     android:textSize="16sp"
-                    android:padding="8dp"
+
                     android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/healthhhhhhhhscoreidd"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textSize="16sp"
-                    android:padding="8dp"
                     android:text="Health Score : "
                     android:textColor="@color/black"/>
             </LinearLayout>
@@ -81,10 +90,11 @@
                 android:id="@+id/summaryiddddddddddddddddd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/summary_background"
                 android:textColor="@color/black"
+                android:padding="16dp"
                 android:textSize="16sp"
-                android:padding="8dp"
-                android:text="TextView" />
+                android:text="Summary will go here..." />
 
 
         </LinearLayout>
