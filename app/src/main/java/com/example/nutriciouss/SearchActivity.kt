@@ -3,13 +3,16 @@ package com.example.nutriciouss
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
+import com.example.nutriciouss.Data.RecipieSuggestion
 import com.example.nutriciouss.Retrofit.RetrofitInstance.api
 import com.example.nutriciouss.databinding.ActivitySearchBinding
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +24,8 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
     private lateinit var adapter: ArrayAdapter<String>
-    private val suggestions = mutableListOf<String>()
+    private val suggestions = mutableListOf<RecipieSuggestion>() // Store the full objects
+    private val suggestionTitles = mutableListOf<String>() // Store just the titles for display
     private var lastQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +74,7 @@ class SearchActivity : AppCompatActivity() {
 
         //Search bar configuration
         setupSearchBar()
+        
     }
 
     private fun setupSearchBar() {
@@ -85,6 +90,18 @@ class SearchActivity : AppCompatActivity() {
             binding.searchBarIDDDD.setDropDownBackgroundResource(android.R.color.white)
         } catch (e: Exception) {
             Log.e("SearchBar", "Error setting dropdown background: ${e.message}")
+        }
+
+        // Set up item click listener
+        binding.searchBarIDDDD.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val selectedSuggestion = suggestions[position]
+            Toast.makeText(this, "Selected: ${selectedSuggestion.title}", Toast.LENGTH_SHORT).show()
+
+            // Clear search
+            binding.searchBarIDDDD.setText("")
+
+            // Navigate
+            navigateToFoodDetail(selectedSuggestion)
         }
 
         // Focus the search bar and show dropdown
@@ -115,29 +132,90 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleItemSelection(selectedTitle: String) {
+
+        // Find the corresponding suggestion object by matching title
+        val selectedSuggestion = suggestions.find { it.title == selectedTitle }
+
+        if (selectedSuggestion != null) {
+            // Show a toast with the selected item
+            Toast.makeText(this, "Selected: ${selectedSuggestion.title}", Toast.LENGTH_SHORT).show()
+
+            // Clear the search text after selection
+            binding.searchBarIDDDD.setText("")
+
+            // Navigate to recipe detail with the ID
+            navigateToFoodDetail(selectedSuggestion)
+        } else {
+            Toast.makeText(this, "Could not find recipe details", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun navigateToFoodDetail(recipeWithId: RecipieSuggestion) {
+        lifecycleScope.launch {
+            try {
+                Log.e("Recipe", "Fetching details for ID: ${recipeWithId.id}")
+
+                val recipeDetails = api.getRecipeInformation(
+                    recipeWithId.id,
+                    "0a1d7e19d1f047028d945a2c42bf4a6a",
+                    true
+                )
+
+                Log.d("Recipe", "Received details: $recipeDetails")
+
+                val intent = Intent(this@SearchActivity, RecipieDetailActivity::class.java).apply {
+                    putExtra("image_url", recipeDetails.image)
+                    putExtra("title", recipeDetails.title)
+                    putExtra("readyInMinutes", recipeDetails.readyInMinutes)
+                    putExtra("healthScore", recipeDetails.healthScore)
+                    putExtra("summary", recipeDetails.summary)
+                }
+                startActivity(intent)
+
+            } catch (e: Exception) {
+                Log.e("Recipe", "Error fetching recipe details: ${e.message}")
+                e.printStackTrace()
+                Toast.makeText(
+                    this@SearchActivity,
+                    "Failed to load details for ${recipeWithId.title}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+
     private fun clearSuggestions() {
         adapter.clear()
         adapter.notifyDataSetChanged()
     }
 
-    private suspend fun fetchSuggestions(query: String): List<String> {
+    private suspend fun fetchSuggestions(query: String): List<RecipieSuggestion> {
         Log.e("Checkkkkkkk", "Going to fetch suggestions")
         return try {
             val response = api.autoCompleteSearch("0a1d7e19d1f047028d945a2c42bf4a6a", query)
             Log.e("Checkkkkkkk", "Response fetched")
-            response.map { it.title }
+            response   // Return the full response objects
         } catch (e: Exception) {
             Log.e("Search", "Error fetching suggestions: ${e.message}")
             emptyList()
         }
     }
 
-    private fun updateSuggestions(newSuggestions: List<String>) {
+    private fun updateSuggestions(newSuggestions: List<RecipieSuggestion>) {
         Log.e("Checkkkkkkk", "Updating suggestions: ${newSuggestions.size} items")
+
+        // Store full suggestion objects
+        suggestions.clear()
+        suggestions.addAll(newSuggestions)
+
+        // Extract titles for display
+        suggestionTitles.clear()
+        suggestionTitles.addAll(newSuggestions.map { it.title })
 
         // Update the adapter with new suggestions
         adapter.clear()
-        adapter.addAll(newSuggestions)
+        adapter.addAll(suggestionTitles)
         adapter.notifyDataSetChanged()
 
         // Log suggestion details

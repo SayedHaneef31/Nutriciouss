@@ -1,9 +1,11 @@
 package com.example.nutriciouss.Retrofit
 
+import com.example.nutriciouss.Data.Recipie
 import com.example.nutriciouss.Data.RecipieResponse
 import com.example.nutriciouss.Data.RecipieSuggestion
 import okhttp3.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SpoonacularApi
@@ -23,5 +25,12 @@ interface SpoonacularApi
         @Query("query") query: String,
         @Query("number") number: Int=6
     ) : List<RecipieSuggestion>
+
+    @GET("recipes/{id}/information")
+    suspend fun getRecipeInformation(
+        @Path("id") id: Int,
+        @Query("apiKey") apiKey: String,
+        @Query("includeNutrition") includeNutrition: Boolean=true
+    ) : Recipie
 
 }
