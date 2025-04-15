@@ -6,7 +6,7 @@
     app:cardCornerRadius="16dp"
     android:layout_margin="10dp"
     android:elevation="4dp"
-    android:backgroundTint="#FFF4CE"
+    android:backgroundTint="#FFE2D1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -20,8 +20,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/water"
-            android:contentDescription="Calorie Icon"
+            android:src="@drawable/dinner"
             android:layout_marginEnd="12dp" />
 
         <LinearLayout
@@ -31,15 +30,15 @@
             android:layout_marginLeft="15dp">
 
             <TextView
-                android:text="Water Intake"
+                android:text="Dinner"
                 android:textColor="#333333"
                 android:textSize="16sp"
                 android:textStyle="normal"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
             <TextView
-                android:id="@+id/waterLeftidddd"
-                android:text="5 out 8 cups"
+                android:id="@+id/dinnerTittleIDDDDDDDD"
+                android:text="Click the button below to generate"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"

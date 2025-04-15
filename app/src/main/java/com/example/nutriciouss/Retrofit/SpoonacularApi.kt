@@ -1,5 +1,7 @@
 package com.example.nutriciouss.Retrofit
 
+import com.example.nutriciouss.Data.Meal
+import com.example.nutriciouss.Data.MealPlanResponse
 import com.example.nutriciouss.Data.Recipie
 import com.example.nutriciouss.Data.RecipieResponse
 import com.example.nutriciouss.Data.RecipieSuggestion
@@ -33,4 +35,12 @@ interface SpoonacularApi
         @Query("includeNutrition") includeNutrition: Boolean=true
     ) : Recipie
 
+
+    @GET("mealplanner/generate")
+    suspend fun generateMealPlan(
+        @Query("timeFrame") timeFrame: String = "day",
+        @Query("targetCalories") targetCalories: Int,
+        @Query("diet") diet: String,
+        @Query("apiKey") apiKey: String
+    ): MealPlanResponse
 }

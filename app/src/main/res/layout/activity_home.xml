@@ -74,20 +74,20 @@
             android:gravity="center_horizontal"
             android:spacing="12dp">
 
-            <include layout="@layout/calorie_card"
-                android:id="@+id/calorieCard"/>
-            <include layout="@layout/water_card"
-                android:id="@+id/waterCard"/>
-            <include layout="@layout/nutrient_card"
-                android:id="@+id/nutrientCard"/>
+            <include layout="@layout/breakfast_card"
+                android:id="@+id/breakfastCardddddd"/>
+            <include layout="@layout/lunch_card"
+                android:id="@+id/LunchCardddd"/>
+            <include layout="@layout/dinner_card"
+                android:id="@+id/DinnerCarddddd"/>
 
             <Button
-                android:id="@+id/btnLogFood"
+                android:id="@+id/btnGenerateMeal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="#204E34"
-                android:text="🍴 Log Food"
+                android:text="🍴 Generate a Meal Plan"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -139,7 +139,7 @@
                         android:textColor="#444444" />
 
                     <Button
-                        android:id="@+id/btnRandomMeal"
+                        android:id="@+id/btnGenerateMealIDDDDDD"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🔄 Generate Another"
